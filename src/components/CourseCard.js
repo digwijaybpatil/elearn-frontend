@@ -3,20 +3,17 @@ import React, { useState, useMemo } from 'react';
 const CourseCard = ({ course }) => {
   const [showLessons, setShowLessons] = useState(false);
 
-  // Predefined list of Bootstrap background color classes
-  const colorClasses = [
-    "bg-primary",
-    "bg-secondary",
-    "bg-success",
-    "bg-danger",
-    "bg-warning",
-    "bg-info"
-  ];
-
-  // Assign a random color for the card based on the course's unique id
   const cardColorClass = useMemo(() => {
+    const colorClasses = [
+      "bg-primary",
+      "bg-secondary",
+      "bg-success",
+      "bg-danger",
+      "bg-warning",
+      "bg-info",
+    ];
     return colorClasses[Math.floor(Math.random() * colorClasses.length)];
-  }, [colorClasses]);
+  }, [course.courseId]);
 
   const toggleLessons = () => {
     setShowLessons(!showLessons);
@@ -24,7 +21,7 @@ const CourseCard = ({ course }) => {
 
   let lessons = [];
   try {
-    lessons = course.lessons
+    lessons = course.lessons;
   } catch (error) {
     console.error("Invalid lessons JSON", error);
   }
@@ -35,12 +32,14 @@ const CourseCard = ({ course }) => {
         <h5 className="card-title">{course.courseName}</h5>
         <h6 className="card-subtitle mb-2">{course.instructorName}</h6>
         <button className="btn btn-light" onClick={toggleLessons}>
-          {showLessons ? 'Hide Lessons' : 'Show Lessons'}
+          {showLessons ? "Hide Lessons" : "Show Lessons"}
         </button>
         {showLessons && (
           <ul className="list-group list-group-flush mt-3">
             {lessons.map((lesson, index) => (
-              <li key={index} className="list-group-item">{lesson}</li>
+              <li key={index} className="list-group-item">
+                {lesson}
+              </li>
             ))}
           </ul>
         )}
