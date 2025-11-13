@@ -5,18 +5,18 @@ const CourseCard = ({ course }) => {
 
   // Predefined list of Bootstrap background color classes
   const colorClasses = [
-    "bg-primary", 
-    "bg-secondary", 
-    "bg-success", 
-    "bg-danger", 
-    "bg-warning", 
+    "bg-primary",
+    "bg-secondary",
+    "bg-success",
+    "bg-danger",
+    "bg-warning",
     "bg-info"
   ];
 
   // Assign a random color for the card based on the course's unique id
   const cardColorClass = useMemo(() => {
     return colorClasses[Math.floor(Math.random() * colorClasses.length)];
-  }, [course.courseId]);
+  }, [colorClasses, course.courseId]);
 
   const toggleLessons = () => {
     setShowLessons(!showLessons);
