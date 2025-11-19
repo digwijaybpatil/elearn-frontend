@@ -9,7 +9,7 @@ const Home = () => {
 
   useEffect(() => {
     // Replace with your backend API URL if different
-    axios.get('http://98.70.106.245:5000/api/Course')
+    axios.get('/api/Course')
       .then(response => {
         setCourses(response.data);
         setLoading(false);
