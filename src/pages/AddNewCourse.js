@@ -9,17 +9,17 @@ const AddNewCourse = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     // Convert comma-separated lessons into a JSON array
     const lessonsArray = lessons.split(',').map(item => item.trim());
-    
+
     const courseData = {
       courseName,
       instructorName,
       lessons: lessonsArray
     };
 
-    axios.post('http://localhost:5256/api/Course', courseData)
+    axios.post('http://13.71.45.38:5000/api/Course', courseData)
       .then(response => {
         setMessage('Course added successfully!');
         setCourseName('');
@@ -39,32 +39,32 @@ const AddNewCourse = () => {
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label className="form-label">Course Name</label>
-          <input 
-            type="text" 
-            className="form-control" 
-            value={courseName} 
-            onChange={(e) => setCourseName(e.target.value)} 
-            required 
+          <input
+            type="text"
+            className="form-control"
+            value={courseName}
+            onChange={(e) => setCourseName(e.target.value)}
+            required
           />
         </div>
         <div className="mb-3">
           <label className="form-label">Instructor Name</label>
-          <input 
-            type="text" 
-            className="form-control" 
-            value={instructorName} 
-            onChange={(e) => setInstructorName(e.target.value)} 
-            required 
+          <input
+            type="text"
+            className="form-control"
+            value={instructorName}
+            onChange={(e) => setInstructorName(e.target.value)}
+            required
           />
         </div>
         <div className="mb-3">
           <label className="form-label">Lessons (comma-separated)</label>
-          <input 
-            type="text" 
-            className="form-control" 
-            value={lessons} 
-            onChange={(e) => setLessons(e.target.value)} 
-            required 
+          <input
+            type="text"
+            className="form-control"
+            value={lessons}
+            onChange={(e) => setLessons(e.target.value)}
+            required
           />
         </div>
         <button type="submit" className="btn btn-primary">Add Course</button>
