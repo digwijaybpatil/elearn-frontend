@@ -23,13 +23,13 @@ jobs:
       - name: Build React App
         run: npm run build
 
-      - name: Upload build folder to Azure VM (TEMP LOCATION)
+      - name: Upload build folder to Azure VM
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.AZURE_VM_IP }}
           username: ${{ secrets.AZURE_VM_USER }}
           key: ${{ secrets.AZURE_SSH_PRIVATE_KEY }}
-          source: "build/*"
+          source: "build/**"
           target: "/var/www/frontend/temp/"
 
       - name: Finalize deployment on VM
@@ -40,6 +40,6 @@ jobs:
           key: ${{ secrets.AZURE_SSH_PRIVATE_KEY }}
           script: |
             sudo rm -rf /var/www/frontend/current/*
-            sudo cp -r /var/www/frontend/temp/build/* /var/www/frontend/current/
+            sudo cp -r /var/www/frontend/temp/* /var/www/frontend/current/
             sudo rm -rf /var/www/frontend/temp
             sudo systemctl restart nginx
