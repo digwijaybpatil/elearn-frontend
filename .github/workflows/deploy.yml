@@ -40,6 +40,6 @@ jobs:
           key: ${{ secrets.AZURE_SSH_PRIVATE_KEY }}
           script: |
             sudo rm -rf /var/www/frontend/current/*
-            sudo cp -r /var/www/frontend/temp/* /var/www/frontend/current/
+            sudo cp -r /var/www/frontend/temp/build/* /var/www/frontend/current/
             sudo rm -rf /var/www/frontend/temp
             sudo systemctl restart nginx
