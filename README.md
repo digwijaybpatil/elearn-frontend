@@ -31,7 +31,9 @@ cd elearn-frontend
 
 # ⚙️ 3. Configure Backend API Endpoint
 
-Update the API URL for Axios calls:
+Update the API URL for Axios calls: if you want to communicate with the backend vm via public ip.
+
+If you want to connect with the public ip and your frontend and backend vm are in same vnet then you can user API PROXY settings in 6.4.Configure Nginx section.
 
 ### `src/pages/Home.js`
 ```js
@@ -133,6 +135,48 @@ server {
         try_files $uri /index.html;
     }
 }
+
+Optional- If you have not configured backend in the code
+
+# Upstream backend API (App VM PRIVATE IP)
+upstream backend_api {
+    server 10.40.1.4:5000;    # <-- your backend VM Private IP
+}
+
+server {
+    listen 80;
+    server_name _;
+
+    # Frontend build output directory
+    root /var/www/frontend/current;
+    index index.html;
+
+    # ------------------------------------------------
+    # 1. API Reverse Proxy (Frontend → Backend)
+    # ------------------------------------------------
+    location /api/ {
+
+        # Forward the FULL request as-is (NO path rewriting issues)
+        proxy_pass http://backend_api$request_uri;
+
+        # Required headers for .NET backend
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        proxy_http_version 1.1;
+        proxy_set_header Connection "";
+    }
+
+    # ------------------------------------------------
+    # 2. Serve Frontend SPA (React / Vue / Angular)
+    # ------------------------------------------------
+    location / {
+        try_files $uri /index.html;
+    }
+}
+
 ```
 
 Enable config:
