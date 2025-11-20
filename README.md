@@ -82,7 +82,7 @@ build/
 ## ☁️ 6.1 SSH into VM
 
 ```sh
-ssh -i ~/.ssh/vm-ssh-private-key azureuser@<FRONTEND_VM_IP>
+ssh -i ~/.ssh/vm-ssh-private-key <username>@<FRONTEND_VM_IP>
 ```
 
 ---
@@ -92,7 +92,7 @@ ssh -i ~/.ssh/vm-ssh-private-key azureuser@<FRONTEND_VM_IP>
 ```sh
 sudo mkdir -p /var/www/frontend/current
 sudo mkdir -p /var/www/frontend/temp
-sudo chown -R azureuser:azureuser /var/www/frontend/
+sudo chown -R <username>:<username> /var/www/frontend/
 ```
 
 ---
@@ -139,6 +139,7 @@ Enable config:
 
 ```sh
 sudo ln -s /etc/nginx/sites-available/frontend /etc/nginx/sites-enabled/
+sudo rm /etc/nginx/sites-enabled/default
 sudo nginx -t
 sudo systemctl restart nginx
 ```
